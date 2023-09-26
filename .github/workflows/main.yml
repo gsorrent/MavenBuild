@@ -32,4 +32,4 @@ jobs:
     steps:
     - name: Deployment
       run: |
-            ls -ltr
+            ls -ltr; pwd
