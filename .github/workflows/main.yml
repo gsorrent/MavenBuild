@@ -40,6 +40,8 @@ jobs:
         push: true
         context: .
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/planview:latest
+    - name: push image 
+      run: docker push  ${{ secrets.DOCKERHUB_USERNAME }}/planview:latest
     
 
 
