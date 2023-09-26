@@ -27,4 +27,5 @@ jobs:
     needs: build
     steps:
     - name: Deployment
-      run: echo "Ex deployment"
+      run: |
+            ls -ltr
