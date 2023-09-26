@@ -38,7 +38,11 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: true
-        tags: user/app:latest
+        context: .
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/planview:latest
+    
+
+
           
   deploy_prod:
     if: github.ref == 'refs/heads/master' 
