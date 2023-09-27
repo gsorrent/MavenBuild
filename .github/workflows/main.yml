@@ -60,7 +60,7 @@ jobs:
             rm -rf /tmp/Docker
             mkdir -p /tmp/Docker
           scp: |
-            'Dockerfile' => /tmp/Docker
+            'k8smanifest/' => /tmp/Docker
           last_ssh: |
             docker run -d ${{ secrets.DOCKERHUB_USERNAME }}/planview:latest 
       
