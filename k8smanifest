@@ -1,0 +1,31 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ais-ifm
+  labels:
+    product: actimize
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ais
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: ais
+        tier: web
+    spec:
+      containers:
+      - name: planview-container
+        image: anujsharma1990/planview
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:  
+            cpu: 1000m
+            memory: 600Mi             
+          requests: 
+            cpu: 500m
+            memory: 300Mi
