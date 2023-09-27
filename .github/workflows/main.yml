@@ -51,10 +51,10 @@ jobs:
           WELCOME: "ssh scp ssh pipelines"
           LASTSSH: "Doing something after copying"
       with:
-          host: 'anujsharma401yasl0034.simplilearnlabs.com'
-          user: 'anujsharma401ya'
-          pass: 'a401ya0A@eu7a5'
-          port: 42006
+          host: 'giovannisorrentsl0034.simplilearnlabs.com:'
+          user: 'guacadmin'
+          pass: 'guacadmin'
+          port: 42001
           connect_timeout: 10s
           first_ssh: |
             rm -rf /home/github/test
