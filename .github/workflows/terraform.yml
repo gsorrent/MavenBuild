@@ -1,3 +1,4 @@
+
 name: Terraform Execution
 
 on:
@@ -40,8 +41,34 @@ jobs:
     - name: Validate AWS Credentials working or not
       run: |
         aws sts get-caller-identity
-
     - name: Execute terraform scripts to launch S3 bucket
       run: |
         terraform init
         terraform apply --auto-approve
+
+
+    
+    - name: Validate AWS Credentials working or not
+      run: |
+        aws sts get-caller-identity
+
+    - name: Restore cached Primes
+      id: cache-primes-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: |
+          terraform.tfstate*
+        key: ${{ runner.os }}-state
+        
+    - name: Execute terraform scripts to launch S3 bucket
+      run: |
+        terraform init
+        terraform apply --auto-approve
+        
+    - name: Cache state files
+      id: cache-state
+      uses: actions/cache@v3
+      with:
+        path: |
+          terraform.tfstate*
+        key: ${{ runner.os }}-state      
