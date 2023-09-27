@@ -1,0 +1,43 @@
+
+name: Terraform Execution
+
+on:
+  push:
+    branches: [ "master", "develop" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Code Checkout
+      uses: actions/checkout@v3
+
+    - name: Storing manifests in GitHub
+      uses: actions/upload-artifact@v3
+      with:
+       name: terraformArtifacts
+       path: terraform/*
+        
+  deploy: 
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Downloading manifests from GitHub
+      uses: actions/download-artifact@v3
+      with:
+       name: terraformArtifacts
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: us-east-1
+        aws-access-key-id: 'ASIAVN3IPFGMWAWXZKYE'
+        aws-secret-access-key: 'qN5Od0E5cXq6Q/DIJxhRMlUDydvypID819IEW9+I'
+        aws-session-token: 'FwoGZXIvYXdzEKT//////////wEaDEKxWuF6a/b/d9TLwCK5AU1oD2S1Tg13HYoavYK9dsnGAgt6Rh2ybDWIeCIUegxFxt//aWsVgQc0hSOvlFXWzlwIoswRGSu3x+WrWMpLUq/lPmOSyMom8uLFUAQrmlQFSDnQ1PJIb8ZAQ9y0y4pEcCX0h7hLzoMTO65z0R+WEXfTUDD+BcJBdMqpEmiw00SPbDoEQ5qA9PNiklS5DxS6QFfW6vEzX56If15d1we2ADppbPuZbOSUkwT8nCTf4QRClfzBoxM62F9LKIaM0KgGMi19y8mzDjOJMegaUS7oQEjGOIqmH96P7wcdCisYfUgGBImzO9sy2DgxZNviDjI='
+
+    
+    - name: Validate AWS Credentials working or not
+      run: |
+        aws sts get-caller-identity
