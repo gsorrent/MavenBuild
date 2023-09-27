@@ -57,19 +57,12 @@ jobs:
           port: 42001
           connect_timeout: 10s
           first_ssh: |
-            rm -rf /home/github/test
-            ls -la  \necho $WELCOME 
-            mkdir -p /home/github/test/test1 && 
-            mkdir -p /home/github/test/test2 &&
+            rm -rf /tmp/Docker
+            mkdir -p /tmp/Docker
           scp: |
-            './test/*' => /home/github/test/
-            ./test/test1* => /home/github/test/test1/
-            ./test/test*.csv => "/home/github/test/test2/"
+            'Dockerfile' => /tmp/Docker
           last_ssh: |
-            echo $LASTSSH && 
-            (mkdir test1/test || true)
-            || ls -la
-
+            docker run -d ${{ secrets.DOCKERHUB_USERNAME }}/planview:latest 
           
   deploy_prod:
     if: github.ref == 'refs/heads/master' 
