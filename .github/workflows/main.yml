@@ -45,7 +45,30 @@ jobs:
     - name: push image 
       run: docker push  ${{ secrets.DOCKERHUB_USERNAME }}/planview:latest
     
-
+    - name: Deploy appplication ussing SSH
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+      env:
+          WELCOME: "ssh scp ssh pipelines"
+          LASTSSH: "Doing something after copying"
+      with:
+          host: 'anujsharma401yasl0034.simplilearnlabs.com'
+          user: 'anujsharma401ya'
+          pass: 'a401ya0A@eu7a5'
+          port: 42006
+          connect_timeout: 10s
+          first_ssh: |
+            rm -rf /home/github/test
+            ls -la  \necho $WELCOME 
+            mkdir -p /home/github/test/test1 && 
+            mkdir -p /home/github/test/test2 &&
+          scp: |
+            './test/*' => /home/github/test/
+            ./test/test1* => /home/github/test/test1/
+            ./test/test*.csv => "/home/github/test/test2/"
+          last_ssh: |
+            echo $LASTSSH && 
+            (mkdir test1/test || true)
+            || ls -la
 
           
   deploy_prod:
