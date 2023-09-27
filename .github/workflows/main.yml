@@ -62,7 +62,8 @@ jobs:
           scp: |
             'k8smanifest/' => /tmp/Docker
           last_ssh: |
-            docker run -d ${{ secrets.DOCKERHUB_USERNAME }}/planview:latest 
+            cd /tmp/Docker/
+            kubectl apply -f .
       
   deploy_prod:
     if: github.ref == 'refs/heads/master' 
