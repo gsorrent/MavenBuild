@@ -63,7 +63,7 @@ jobs:
             'Dockerfile' => /tmp/Docker
           last_ssh: |
             docker run -d ${{ secrets.DOCKERHUB_USERNAME }}/planview:latest 
-          
+      
   deploy_prod:
     if: github.ref == 'refs/heads/master' 
     runs-on: ubuntu-latest
